@@ -19,7 +19,7 @@ app.use(routes)
 
 app.get("/", (req, res) => {
     res.json({
-        message: `User is online at port ${port}!`
+        message: `Employee is online at port ${port}!`
     })
 })
 

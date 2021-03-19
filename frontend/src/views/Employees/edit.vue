@@ -1,9 +1,9 @@
 <template>
     <v-container align="center">
-        <v-subheader>Create User</v-subheader>
+        <v-subheader>Edit Employee</v-subheader>
         <v-col md="6">
             <v-card outlined>
-                <v-card-title> Create User </v-card-title>
+                <v-card-title> Edit Employee </v-card-title>
                 <v-row class="mx-1">
                     <v-col cols="12" class="pa-9">
                         <v-row class="justify-center">
@@ -14,20 +14,31 @@
                                     >
                                         <v-row dense>
                                             <v-col cols="12" md="12">
+                                                <v-text-field
+                                                    v-model="id"
+                                                    label="Id"
+                                                    type="text"
+                                                    outlined
+                                                    dense
+                                                    flat
+                                                    disabled
+                                                />
+                                            </v-col>
+                                            <v-col cols="12" md="12">
                                                 <ValidationProvider
-                                                    name="Nama"
+                                                    name="Name"
                                                     rules="required"
                                                     v-slot="{ errors }"
                                                 >
                                                     <v-text-field
-                                                        v-model="form.nama"
+                                                        v-model="form.name"
                                                         :error="
                                                             errors.length > 0
                                                         "
                                                         :error-messages="
                                                             errors[0]
                                                         "
-                                                        label="Nama Pengguna"
+                                                        label="Name"
                                                         type="text"
                                                         outlined
                                                         dense
@@ -35,30 +46,6 @@
                                                     />
                                                 </ValidationProvider>
                                             </v-col>
-                                            <v-col cols="12" md="12">
-                                                <ValidationProvider
-                                                    name="No Hp"
-                                                    rules="required|numeric|min:10"
-                                                    v-slot="{ errors }"
-                                                >
-                                                    <v-text-field
-                                                        v-model="form.no_hp"
-                                                        :error="
-                                                            errors.length > 0
-                                                        "
-                                                        :error-messages="
-                                                            errors[0]
-                                                        "
-                                                        label="No Ponsel"
-                                                        type="text"
-                                                        outlined
-                                                        dense
-                                                        flat
-                                                    />
-                                                </ValidationProvider>
-                                            </v-col>
-                                        </v-row>
-                                        <v-row dense>
                                             <v-col cols="12" md="12">
                                                 <ValidationProvider
                                                     name="Email"
@@ -82,22 +69,70 @@
                                                 </ValidationProvider>
                                             </v-col>
                                         </v-row>
+                                        <v-row dense>
+                                            <v-col cols="12" md="12">
+                                                <ValidationProvider
+                                                    name="Mobile"
+                                                    rules="required|numeric|min:10"
+                                                    v-slot="{ errors }"
+                                                >
+                                                    <v-text-field
+                                                        v-model="form.mobile"
+                                                        :error="
+                                                            errors.length > 0
+                                                        "
+                                                        :error-messages="
+                                                            errors[0]
+                                                        "
+                                                        label="Mobile"
+                                                        type="text"
+                                                        outlined
+                                                        dense
+                                                        flat
+                                                    />
+                                                </ValidationProvider>
+                                            </v-col>
+                                        </v-row>
+                                        <v-row dense>
+                                            <v-col cols="12" md="12">
+                                                <ValidationProvider
+                                                    name="birthdate"
+                                                    rules="required"
+                                                    v-slot="{ errors }"
+                                                >
+                                                    <v-text-field
+                                                        v-model="form.birthdate"
+                                                        :error="
+                                                            errors.length > 0
+                                                        "
+                                                        :error-messages="
+                                                            errors[0]
+                                                        "
+                                                        label="Birthdate"
+                                                        type="date"
+                                                        outlined
+                                                        dense
+                                                        flat
+                                                    />
+                                                </ValidationProvider>
+                                            </v-col>
+                                        </v-row>
                                         <v-row
                                             cols="10"
                                             v-for="(
-                                                alamatInput, index
-                                            ) in alamatInputs"
+                                                addressInput, index
+                                            ) in addressInputs"
                                             :key="index"
                                         >
                                             <v-col>
                                                 <ValidationProvider
-                                                    name="Alamat"
+                                                    name="Addresss"
                                                     rules="required"
                                                     v-slot="{ errors }"
                                                 >
                                                     <v-text-field
                                                         v-model="
-                                                            alamatInput.alamat
+                                                            addressInput.address
                                                         "
                                                         :error="
                                                             errors.length > 0
@@ -105,7 +140,7 @@
                                                         :error-messages="
                                                             errors[0]
                                                         "
-                                                        label="Alamat"
+                                                        label="Address"
                                                         type="text"
                                                         outlined
                                                         dense
@@ -116,13 +151,15 @@
                                             <v-col cols="2">
                                                 <v-btn
                                                     v-if="index == 0"
-                                                    @click="addAlamatInput"
+                                                    @click="addAddressInput"
                                                     >+</v-btn
                                                 >
                                                 <v-btn
                                                     v-if="index > 0"
                                                     @click="
-                                                        removeAlamatInput(index)
+                                                        removeAddressInput(
+                                                            index
+                                                        )
                                                     "
                                                     >-</v-btn
                                                 >
@@ -135,19 +172,19 @@
                                             >
                                                 <v-spacer></v-spacer>
                                                 <v-btn
+                                                    to="/"
+                                                    text
+                                                    class="black--text text-capitalize ml-3"
+                                                    >Cancel</v-btn
+                                                >
+                                                <v-btn
                                                     color="success"
                                                     depressed
                                                     class="text-capitalize"
                                                     type="submit"
                                                     :loading="submitProses"
                                                     :disabled="submitProses"
-                                                    >Create</v-btn
-                                                >
-                                                <v-btn
-                                                    to="/"
-                                                    text
-                                                    class="black--text text-capitalize ml-3"
-                                                    >Back</v-btn
+                                                    >Submit</v-btn
                                                 >
                                             </div>
                                         </div>
@@ -167,19 +204,22 @@ import { mapActions } from 'vuex'
 // import router from '../../router'
 
 export default {
-    name: "AddData",
+    name: "editEmployee",
+    props: ["id"],
     data() {
         return {
             submitProses: false,
             form: {
-                nama: "",
+                id: this.id,
+                name: "",
                 email: "",
-                no_hp: "",
-                alamat: [],
+                mobile: "",
+                birthdate: "",
+                address: []
             },
-            alamatInputs: [
+            addressInputs: [
                 {
-                    alamat: "",
+                    address: "",
                 }
             ]
         };
@@ -189,34 +229,34 @@ export default {
     },
     methods: {
         ...mapActions({
-            create: 'users/create',
+            edit: 'employees/edit',
+            update: 'employees/update',
             alert: 'alert'
         }),
 
-        addAlamatInput() {
-            this.alamatInputs.push({
-                alamat: ''
+        addAddressInput() {
+            this.addressInputs.push({
+                address: ''
             })
         },
-        removeAlamatInput(index) {
-            this.alamatInputs.splice(index, 1)
+        removeAddressInput(index) {
+            this.addressInputs.splice(index, 1)
         },
 
         async submit() {
             this.submitProses = true;
-            this.alamatInputs.map(val => {
-                console.log(val.alamat)
-                this.form.alamat.push(val.alamat)
+            this.addressInputs.map(val => {
+                this.form.address.push(val.address)
             })
 
             try {
-                this.create(this.form)
+                this.update(this.form)
                 this.$router.push('/')
                 this.alert({
                     snackbar: true,
                     color: 'success',
                     timeout: '5000',
-                    text: 'Data berhasil dimasukkan !',
+                    text: 'Data berhasil diedit !',
                 })
                 this.loginProgress = false
             } catch (error) {
@@ -230,6 +270,21 @@ export default {
             }
         },
     },
+    async created() {
+        const response = await this.edit(this.id);
+        this.form.name = response.data.data.name
+        this.form.email = response.data.data.email
+        this.form.mobile = response.data.data.mobile
+        this.form.birthdate = response.data.data.birthdate
+        response.data.data.address.map((val, index) => {
+            this.addressInputs.splice(index, 1)
+            this.addressInputs.push({
+                address: val
+            })
+
+        })
+
+    }
 };
 </script>
 

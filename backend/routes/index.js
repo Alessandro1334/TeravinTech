@@ -1,7 +1,7 @@
 const route = require('express').Router()
-const user = require('./user')
+const employee = require('./employee')
 
 // Route Init
-route.use('/api/user', user)
+route.use('/api/employee', employee)
 
 module.exports = route

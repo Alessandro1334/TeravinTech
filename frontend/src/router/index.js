@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-
 /**
- * Users Route
+ * Employees Route
  */
-import User from '../views/Users'
-import Add from '../views/Users/add'
+import Employee from '../views/Employees'
+import Add from '../views/Employees/add'
+import Edit from '../views/Employees/edit'
+import Detail from '../views/Employees/detail'
+import Delete from '../views/Employees/delete'
 
 
 Vue.use(VueRouter)
@@ -14,12 +16,31 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        component: User
+        component: Employee
     },
     {
         path: '/add',
         component: Add
-    }
+    },
+
+    {
+        path: '/edit/:id',
+        component: Edit,
+        name: 'employeeEdit',
+        props: true
+    },
+    {
+        path: '/detail/:id',
+        component: Detail,
+        name: 'employeeDetail',
+        props: true
+    },
+    {
+        path: '/delete/:id',
+        component: Delete,
+        name: 'employeeDelete',
+        props: true
+    },
 ]
 
 const router = new VueRouter({
