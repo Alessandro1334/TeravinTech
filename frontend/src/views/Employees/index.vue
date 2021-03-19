@@ -104,6 +104,33 @@
                     </v-simple-table>
                 </v-col>
             </v-row>
+            <v-row>
+                <v-spacer></v-spacer>
+                <v-col cols="1">
+                    <div class="d-flex align-center justify-center">
+                        <p class="mr-3">Show</p>
+                        <v-select
+                            v-model="limit"
+                            :items="items"
+                            @change="pageChange"
+                            required
+                        ></v-select>
+                        <p class="ml-3">per page</p>
+                    </div>
+                </v-col>
+                <v-col cols="2" class="ml-2">
+                    <div class="text-center">
+                        <div class="text-left">
+                            <v-pagination
+                                v-model="page"
+                                :length="this.employees.totalPage"
+                                @input="pageChange"
+                            ></v-pagination>
+                        </div>
+                    </div>
+                </v-col>
+                <v-spacer></v-spacer>
+            </v-row>
 
             <v-card-actions>
                 <v-spacer></v-spacer>
@@ -123,15 +150,15 @@ export default {
     },
     data() {
         return {
+            sortid: "id-desc",
             sortname: "name-desc",
             sortemail: "email-desc",
+            sortmobile: "mobile-desc",
             search: "",
             loadingStatus: true,
-            modal: {
-                status: false,
-                title: '',
-                btn_label: ''
-            }
+            items: [10, 5],
+            limit: 10,
+            page: 1
         }
     },
     computed: {
@@ -149,12 +176,27 @@ export default {
                 search: this.search
             })
         },
-
+        async pageChange() {
+            await this.getAll({
+                limit: this.limit,
+                page: this.page
+            })
+        },
         async sort(params) {
             if (params == "name") {
                 this.sortname == 'name-desc' ? this.sortname = "name-asc" : this.sortname = "name-desc"
                 await this.getAll({
                     sort: this.sortname
+                })
+            } else if (params == "id") {
+                this.sortid == 'id-desc' ? this.sortid = "id-asc" : this.sortid = "id-desc"
+                await this.getAll({
+                    sort: this.sortid
+                })
+            } else if (params == "mobile") {
+                this.sortmobile == 'mobile-desc' ? this.sortmobile = "mobile-asc" : this.sortmobile = "mobile-desc"
+                await this.getAll({
+                    sort: this.sortmobile
                 })
             } else {
                 this.sortemail == 'email-desc' ? this.sortemail = "email-asc" : this.sortemail = "email-desc"

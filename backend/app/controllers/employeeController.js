@@ -12,17 +12,14 @@ module.exports = {
             let conditions = { order: [["updatedAt", "DESC"]] }
             let { search, limit, sort, page = 1 } = req.query
             if (search) {
-                conditions.where = { nama: { [Op.substring]: search } }
+                conditions.where = { name: { [Op.substring]: search } }
             }
             if (sort) {
                 const sortingFields = [
+                    "id",
                     "name",
                     "email",
-                    "mobile",
-                    "birthdate",
-                    "address",
-                    "createdAt",
-                    "updatedAt",
+                    "mobile"
                 ]
                 let [field, order] = sort.toLowerCase().split("-");
                 const column = sortingFields.find((col) =>
