@@ -16,12 +16,6 @@ export default new Vuex.Store({
         },
     },
     mutations: {
-        SET_DRAWER(state, payload) {
-            state.drawer = payload
-        },
-        SET_DRAWER_HOME(state, payload) {
-            state.drawerhome = payload
-        },
         ALERT(state, payload) {
             state.alert = {
                 snackbar: payload.snackbar,

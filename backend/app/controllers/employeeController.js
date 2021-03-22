@@ -141,6 +141,9 @@ module.exports = {
             })
         }
     },
+    /*
+     Get by id data
+ */
     getById: async (req, res) => {
         try {
             const { id } = req.params
@@ -154,6 +157,9 @@ module.exports = {
             res.status(500).send({ status: 'Internal Server Error' })
         }
     },
+    /*
+     Update data
+ */
     update: async (req, res) => {
         await check('name')
             .notEmpty().withMessage('Name is required!')
@@ -209,6 +215,9 @@ module.exports = {
             })
         }
     },
+    /*
+     Delete data
+ */
     delete: async (req, res) => {
         try {
             const { id } = req.params
